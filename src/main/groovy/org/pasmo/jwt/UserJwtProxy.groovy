@@ -6,7 +6,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.JwtProxy
 import com.auth0.jwt.PayloadHandler
 
-class UserJwtProxy implements JwtProxy{
+class UserJwtProxy implements JwtProxy {
     private static final String PAYLOAD_ID = "user"
     private PayloadHandler payloadHandler
 
