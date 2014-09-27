@@ -4,12 +4,17 @@ import com.mongodb.BasicDBObject
 import com.mongodb.DBCollection
 import com.mongodb.DBCursor
 import com.mongodb.DBObject
+import groovy.transform.CompileStatic
 import org.pasmo.datastore.MongoDbClient
 
+import javax.inject.Inject
+
+@CompileStatic
 class LocationsMongoImpl implements Locations {
     private final MongoDbClient mongoDbClient
     private final String COLLECTION_NAME = "pasmo_locations"
 
+    @Inject
     LocationsMongoImpl(MongoDbClient mongoDbClient) {
         this.mongoDbClient = mongoDbClient
     }
@@ -26,14 +31,14 @@ class LocationsMongoImpl implements Locations {
         } finally {
             cursor.close()
         }
-        return null
+        return locations
     }
 
     Location createLocation(DBObject doc) {
         new Location(
-                name: doc.get("name"),
-                district: doc.get("district"),
-                locationType: doc.get("locationType"),
+                name: doc.get("name") as String,
+                district: doc.get("district") as String,
+                locationType: doc.get("locationType") as String,
                 loc: doc.get("loc") as Map
         )
     }
