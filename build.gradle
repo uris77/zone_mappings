@@ -39,7 +39,6 @@ task stage{
     dependsOn installApp
 }
 
-
 run {
     Properties properties = new Properties(System.getProperties())
     try {
@@ -49,6 +48,8 @@ run {
         System.getProperties().each { prop ->
             systemProperty prop.key, prop.value
         }
+        systemProperty "ratpack.port", "5051"
+        systemProperty "PASMO_ENV", "DEVELOPMENT"
     }catch (FileNotFoundException ex) {
         println "Could not find env file"
         println "This is normal in production."
