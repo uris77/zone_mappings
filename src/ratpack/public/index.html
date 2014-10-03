@@ -1,0 +1,122 @@
+<html>
+<head>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
+    <style>
+        body {
+            color:#404040;
+            font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+            margin:0;
+            padding:0;
+            -webkit-font-smoothing:antialiased;
+        }
+        * {
+            -webkit-box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            box-sizing:border-box;
+        }
+        h1 {
+            font-size:22px;
+            margin:0;
+            font-weight:400;
+        }
+        a {
+            color:#404040;
+            text-decoration:none;
+        }
+        a:hover { color:#101010; }
+
+        .sidebar {
+            position:absolute;
+            width:33.3333%;
+            height:100%;
+            top:0;left:0;
+            overflow:hidden;
+            border-right:1px solid rgba(0,0,0,0.25);
+        }
+        .pad2 {
+            padding:20px;
+        }
+        .quiet {
+            color:#888;
+        }
+        .map {
+            position:absolute;
+            left:13.3333%;
+            width:86.6666%;
+            top:0;bottom:0;
+        }
+        /* Marker tweaks */
+        .leaflet-popup-close-button {
+            display:none;
+        }
+        .leaflet-popup-content {
+            font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+            padding:0;
+            width:200px;
+        }
+        .leaflet-popup-content-wrapper {
+            padding:0;
+        }
+        .leaflet-popup-content h3 {
+            background:#91c949;
+            color:#fff;
+            margin:0;
+            display:block;
+            padding:10px;
+            border-radius:3px 3px 0 0;
+            font-weight:700;
+        }
+        .leaflet-popup-content div {
+            padding:10px;
+        }
+        .leaflet-container .leaflet-marker-icon { cursor:pointer; }
+    </style>
+</head>
+<body>
+
+
+<div id="map" class="map">
+</div>
+
+<script type="text/javascript">
+    var geoJson = {
+        type: "FeatureCollection",
+        features: [{
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: [-88.764577, 17.251694]
+            },
+            properties: {
+                title: "Bull Frog",
+                'marker-size': 'large',
+                'marker-color': '#BE1162',
+                'marker-symbol': 'pharmacy'
+            }
+        }]
+    };
+
+    L.mapbox.accessToken = "pk.eyJ1IjoidXJpczc3IiwiYSI6InRuYTZRa3MifQ._Bo-JRcA7QVGocCJvdSoJg";
+    var map = L.mapbox.map("map", "uris77.jdp8mk3h").setView([17.251694, -88.764577], 100);
+
+    var featureLayer = L.mapbox.featureLayer().addTo(map);
+
+    featureLayer.on("ready", function() {
+        console.log("layer is ready", featureLayer.getGeoJSON());
+        featureLayer.eachLayer(function(locstat) {
+            console.log("LOC STAT: ", locstat);
+        });
+    });
+
+    featureLayer.on("layeradd", function(e) {
+        console.log("layer: ", e.layer);
+        var marker = e.layer;
+        console.log("marker: ", marker);
+    });
+    featureLayer.setGeoJSON(geoJson);
+
+</script>
+</body>
+</html>

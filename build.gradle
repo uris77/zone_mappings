@@ -3,7 +3,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath "io.ratpack:ratpack-gradle:0.9.8"
+    classpath "io.ratpack:ratpack-gradle:0.9.9"
 
   }
 }
@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    springloaded "org.springframework:springloaded:1.2.0.RELEASE"
+    //springloaded "org.springframework:springloaded:1.2.0.RELEASE"
 
     compile ratpack.dependency("jackson")
     runtime 'org.slf4j:slf4j-simple:1.7.7'

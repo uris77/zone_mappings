@@ -7,37 +7,17 @@ import com.auth0.jwt.impl.BasicPayloadHandler
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
-import ratpack.groovy.handling.GroovyChainAction
+import ratpack.func.Action
+import ratpack.groovy.Groovy
+import ratpack.handling.Chain
 
 import static ratpack.jackson.Jackson.json
 
-/**
- * Created by uris77 on 9/25/14.
- */
-class GoogleJwtHandler extends GroovyChainAction {
+class GoogleJwtHandler implements Action<Chain> {
     private final String accessTokenUrl = "https://accounts.google.com"
     private final String peopleApiUrl = "https://www.googleapis.com"
     private final String GRANT_TYPE = "authorization_code"
     private final String GOOGLE_SECRET= System.getProperty("GOOGLE_SECRET")
-
-    @Override
-    protected void execute() throws Exception {
-        handler("google") {
-            byMethod {
-                post {
-                    blocking {
-                        Map params = parse Map
-                        println "got params: ${params}"
-                        getToken(params)
-                    } then { token ->
-                        println "token: ${token}"
-                        render json(token)
-                    }
-                }
-            }
-
-        }
-    }
 
     Map<String, String> getToken(Map googleRequest) {
         def http = new HTTPBuilder(accessTokenUrl)
@@ -91,5 +71,27 @@ class GoogleJwtHandler extends GroovyChainAction {
             }
         }
         googleProfile
+    }
+
+    @Override
+    void execute(Chain chain) throws Exception {
+        Groovy.chain(chain) {
+            handler("google") {
+                byMethod {
+                    post {
+                        blocking {
+                            Map params = parse Map
+                            println "got params: ${params}"
+                            getToken(params)
+                        } then { token ->
+                            println "token: ${token}"
+                            render json(token)
+                        }
+                    }
+                }
+
+            }
+        }
+
     }
 }

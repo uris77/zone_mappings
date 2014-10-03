@@ -1,11 +1,14 @@
 package org.pasmo.locations
 
-import ratpack.groovy.handling.GroovyChainAction
+import ratpack.func.Action
+import ratpack.groovy.Groovy
+import ratpack.handling.Chain
+
 import static ratpack.jackson.Jackson.json
 
 import javax.inject.Inject
 
-class LocationChainAction extends GroovyChainAction {
+class LocationChainAction implements Action<Chain> {
     private final Locations locations
 
     @Inject
@@ -14,17 +17,20 @@ class LocationChainAction extends GroovyChainAction {
     }
 
     @Override
-    protected void execute() throws Exception {
-        handler {
-            byMethod {
-                get {
-                    blocking {
-                        locations.allAvailable()
-                    } then {List<Location> allLocations ->
-                        render json(allLocations)
+    void execute(Chain chain) throws Exception {
+        Groovy.chain(chain) {
+            handler {
+                byMethod {
+                    get {
+                        blocking {
+                            locations.allAvailable()
+                        } then {List<Location> allLocations ->
+                            render json(allLocations)
+                        }
                     }
                 }
             }
         }
+
     }
 }

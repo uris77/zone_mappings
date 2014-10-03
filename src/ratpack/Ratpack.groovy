@@ -25,5 +25,7 @@ ratpack {
                 handler chain(registry.get(LocationChainAction))
             }
         }
+
+        assets "public"
     }
 }
