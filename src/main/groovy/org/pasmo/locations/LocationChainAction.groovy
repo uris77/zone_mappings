@@ -25,12 +25,11 @@ class LocationChainAction implements Action<Chain> {
                         blocking {
                             locations.allAvailable()
                         } then {List<Location> allLocations ->
-                            render json(allLocations)
+                            render json([type: "FeatureCollection", features: allLocations])
                         }
                     }
                 }
             }
         }
-
     }
 }
