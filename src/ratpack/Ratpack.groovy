@@ -4,6 +4,7 @@ import org.pasmo.locations.LocationsModule
 import org.pasmo.surveys.SurveysModule
 import org.pasmo.jwt.GoogleJwtHandler
 import ratpack.jackson.JacksonModule
+import static ratpack.groovy.Groovy.groovyTemplate
 
 import static ratpack.groovy.Groovy.ratpack
 
@@ -24,6 +25,10 @@ ratpack {
             prefix("locations") {
                 handler chain(registry.get(LocationChainAction))
             }
+        }
+
+        get {
+            render groovyTemplate("index.html")
         }
 
         assets "public"
