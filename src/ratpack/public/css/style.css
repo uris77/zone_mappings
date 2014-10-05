@@ -37,8 +37,8 @@ a:hover { color:#101010; }
 }
 .map {
     position:absolute;
-    left:13.3333%;
-    width:86.6666%;
+    left: 25%;
+    width: 75%;
     top:0;bottom:0;
 }
 /* Marker tweaks */
@@ -66,3 +66,19 @@ a:hover { color:#101010; }
     padding:10px;
 }
 .leaflet-container .leaflet-marker-icon { cursor:pointer; }
+
+.rp-docs-masthead {
+    padding: 80px 0;
+    position: relative;
+    color: #cdbfe3;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+    background-color: #6f5499;
+    background-image: linear-gradient(to bottom, #563d7c 0, #6f5499 100%);
+    background-repeat: repeat-x;
+    height: 100%;
+}
+
+/*main {*/
+    /*display: block;*/
+/*}*/
